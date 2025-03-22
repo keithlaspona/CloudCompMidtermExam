@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="box">
+            <h1>Register</h1>
+            <form id="myForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username"><br>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password"><br>
+                
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password"><br>
+                
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+ 
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            const data = {
+                username: username,
+                password: password
+            };
+
+            axios.post('http://127.0.0.1:8000/create_user/', data)
+            .then(function (response) {
+                alert(response.data.status);
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error.response ? error.response.data : error.message);
+            });
+        });
+    </script>
+</body>
+</html>
